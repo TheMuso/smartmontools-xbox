@@ -21,6 +21,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "BootEEPROM.h"
+#include "BootHddKey.h"
+#ifdef __cplusplus
+}
+#endif
+
 #include "atacmds.h"
 #include "knowndrives.h"  // get_default_attr_defs()
 #include "utility.h"
@@ -796,6 +805,73 @@ bool ata_nodata_command(ata_device * device, unsigned char command,
 
   return device->ata_pass_through(in);
 }
+bool ata_security_command(ata_device * device, unsigned char command,
+                     char * security_password)
+{
+  unsigned char *data; int security_master=0;
+  data = new unsigned char [512];
+  data[0]		= security_master & 0x01;
+  memcpy(data+2, security_password, 32);
+  ata_cmd_in in;
+  in.in_regs.command = command;
+  in.in_regs.sector_count = 1;
+ 
+  in.set_data_out(data, 1);
+  
+  return device->ata_pass_through(in);
+}
+static void read_eeprom_file(char * filename,EEPROMDATA * eeprom)
+{
+		FILE * fp = fopen(filename,"r+");
+                if (fp==NULL) {
+                        pout("Error - unable to open file %s\n",filename);
+                        exit(1);
+                }
+                fread(eeprom,sizeof(EEPROMDATA),1,fp);
+                fclose(fp);
+
+}
+static void print_hex(unsigned char *szString,long len) {
+        int i;
+        for(i=0;i<len;i++) {
+                pout("%02x",szString[i]);
+        }
+}
+
+bool ata_eeprom_command(ata_device * device, unsigned char command,
+                     char * security_password,ata_identify_device * drive,char * filename)
+{
+  unsigned char *data; int security_master=0;
+  unsigned char model[40+1], serial[20+1];
+  unsigned char HDDPass[256];
+  char s_length = 0x14;
+  char m_length = 0x28;
+  unsigned char pw[32];
+  
+  data = new unsigned char [512];
+  memset(data,0,512);
+  data[0]		= security_master & 0x01;
+  EEPROMDATA eeprom_data;  
+  read_eeprom_file(filename,&eeprom_data);
+  BootDecryptEEPROM(&eeprom_data);
+  s_length = copy_swap_trim(serial,(drive->serial_no),s_length);
+  m_length = copy_swap_trim(model,(drive->model),m_length);  
+  HMAC_SHA1 (HDDPass, eeprom_data.HDDKkey, 0x10, model, m_length, serial, s_length);
+  
+  memcpy(pw, HDDPass, 20);
+  pout("security_password=");
+  print_hex(pw,32);
+  pout("\n");
+ 
+  memcpy(data+2, pw, 20);
+  ata_cmd_in in;
+  in.in_regs.command = command;
+  in.in_regs.sector_count = 1;
+ 
+  in.set_data_out(data, 1);
+  return device->ata_pass_through(in);
+}
+
 
 // Issue SET FEATURES command with optional sector count register value
 bool ata_set_features(ata_device * device, unsigned char features,
