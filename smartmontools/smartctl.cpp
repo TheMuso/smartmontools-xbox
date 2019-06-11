@@ -924,44 +924,39 @@ static int parse_options(int argc, char** argv, const char * & type,
         bool get = (optchar == 'g');
         char name[16+1]; unsigned val;
         int n1 = -1, n2 = -1, n3 = -1, len = strlen(optarg);
-		 if (!strncmp(optarg,"security-eeprom-setpass,",strlen("security-eeprom-setpass,"))) {
-				memset(ataopts.set_security_password,0,33);
-				strncpy(ataopts.set_security_eeprom,optarg+strlen("security-eeprom-setpass,"), len-strlen("security-eeprom-setpass,"));
-	
-			ataopts.set_security_eeprom_setpass = true;
-				}
-				else if (!strncmp(optarg,"security-eeprom-disable,",strlen("security-eeprom-disable,"))) {
-				memset(ataopts.set_security_password,0,33);
-			ataopts.set_security_eeprom_disable = true;
-				strncpy(ataopts.set_security_eeprom,optarg+strlen("security-eeprom-disable,"), len-strlen("security-eeprom-disable,"));
-				}
-				else if (!strncmp(optarg,"security-eeprom-unlock,",strlen("security-eeprom-unlock,"))) {
-				memset(ataopts.set_security_password,0,33);
-				strncpy(ataopts.set_security_eeprom,optarg+strlen("security-eeprom-unlock,"), len-strlen("security-eeprom-unlock,"));
-		   	ataopts.set_security_eeprom_unlock = true;
-				}
-				else if (!strncmp(optarg,"security-setpass,",strlen("security-setpass,"))) {
-				memset(ataopts.set_security_password,0,33);
-			strncpy(ataopts.set_security_password,optarg+strlen("security-setpass,"), len-strlen("security-setpass,"));
-			printf("PASSWORD %s\n",ataopts.set_security_password);
-				ataopts.set_security_setpass = true;
-		  
-				}
-			else if(!strncmp(optarg,"security-disable,",strlen("security-disable,"))) {
-				memset(ataopts.set_security_password,0,32);
-			strncpy(ataopts.set_security_password,optarg+strlen("security-disable,"), len-strlen("security-disable,"));
-			printf("PASSWORD %s\n",ataopts.set_security_password);
-				ataopts.set_security_disable = true;
-	
-			}
-			else if(!strncmp(optarg,"security-unlock,",strlen("security-unlock,"))) {
-				memset(ataopts.set_security_password,0,32);
-			strncpy(ataopts.set_security_password,optarg+strlen("security-unlock,"), len-strlen("security-unlock,"));
-			printf("PASSWORD %s\n",ataopts.set_security_password);
-				ataopts.set_security_unlock = true;
-	
-			}
-
+        if (!strncmp(optarg, "security-eeprom-setpass,", strlen("security-eeprom-setpass,"))) {
+          memset(ataopts.set_security_password, 0, 33);
+          strncpy(ataopts.set_security_eeprom, optarg + strlen("security-eeprom-setpass,"), len - strlen("security-eeprom-setpass,"));
+          ataopts.set_security_eeprom_setpass = true;
+        }
+        else if (!strncmp(optarg, "security-eeprom-disable,", strlen("security-eeprom-disable,"))) {
+          memset(ataopts.set_security_password, 0, 33);
+          ataopts.set_security_eeprom_disable = true;
+          strncpy(ataopts.set_security_eeprom, optarg + strlen("security-eeprom-disable,"), len - strlen("security-eeprom-disable,"));
+        }
+        else if (!strncmp(optarg, "security-eeprom-unlock,", strlen("security-eeprom-unlock,"))) {
+          memset(ataopts.set_security_password, 0, 33);
+          strncpy(ataopts.set_security_eeprom, optarg + strlen("security-eeprom-unlock,"), len - strlen("security-eeprom-unlock,"));
+          ataopts.set_security_eeprom_unlock = true;
+        }
+        else if (!strncmp(optarg, "security-setpass,", strlen("security-setpass,"))) {
+          memset(ataopts.set_security_password, 0, 33);
+          strncpy(ataopts.set_security_password, optarg + strlen("security-setpass,"), len - strlen("security-setpass,"));
+          printf("PASSWORD %s\n", ataopts.set_security_password);
+          ataopts.set_security_setpass = true;
+        }
+        else if(!strncmp(optarg, "security-disable,", strlen("security-disable,"))) {
+          memset(ataopts.set_security_password, 0, 32);
+          strncpy(ataopts.set_security_password, optarg + strlen("security-disable,"), len - strlen("security-disable,"));
+          printf("PASSWORD %s\n", ataopts.set_security_password);
+          ataopts.set_security_disable = true;
+        }
+        else if(!strncmp(optarg, "security-unlock,", strlen("security-unlock,"))) {
+          memset(ataopts.set_security_password, 0, 32);
+          strncpy(ataopts.set_security_password, optarg + strlen("security-unlock,"), len - strlen("security-unlock,"));
+          printf("PASSWORD %s\n", ataopts.set_security_password);
+          ataopts.set_security_unlock = true;
+        }
         else if (sscanf(optarg, "%16[^,=]%n%*[,=]%n%u%n", name, &n1, &n2, &val, &n3) >= 1
             && (n1 == len || (!get && n2 > 0))) {
           bool on  = false;
