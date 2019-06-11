@@ -839,7 +839,7 @@ static void print_hex(unsigned char *szString,long len) {
 }
 
 bool ata_eeprom_command(ata_device * device, unsigned char command,
-                     char * security_password,ata_identify_device * drive,char * filename)
+                     ata_identify_device * drive,char * filename)
 {
   unsigned char *data; int security_master=0;
   unsigned char model[40+1], serial[20+1];

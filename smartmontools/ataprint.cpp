@@ -3768,12 +3768,10 @@ int ataPrintMain (ata_device * device, const ata_print_options & options)
       pout("ATA Security set to frozen mode\n");
   }
   if (options.set_security_eeprom_setpass) {
-    char password[33]="XBOXSCENE";
-    strcpy(password,options.set_security_password);
     char eeprom[256];
     strcpy (eeprom,options.set_security_eeprom);
     
-    if (!ata_eeprom_command(device, ATA_SECURITY_SETPASS,password,&drive,eeprom)) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_SETPASS,&drive,eeprom)) {
         pout("ATA SECURITY SETPASS failed: %s\n", device->get_errmsg());
         returnval |= FAILSMART;
     }
@@ -3781,12 +3779,10 @@ int ataPrintMain (ata_device * device, const ata_print_options & options)
       pout("ATA Security setpass\n");
   }
   if (options.set_security_eeprom_disable) {
-    char password[33]="XBOXSCENE";
-    strcpy(password,options.set_security_password);
     char eeprom[256];
     strcpy (eeprom,options.set_security_eeprom);
     
-    if (!ata_eeprom_command(device, ATA_SECURITY_DISABLE,password,&drive,eeprom)) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_DISABLE,&drive,eeprom)) {
         pout("ATA SECURITY DISABLE failed: %s\n", device->get_errmsg());
         returnval |= FAILSMART;
     }
@@ -3794,11 +3790,9 @@ int ataPrintMain (ata_device * device, const ata_print_options & options)
       pout("ATA Security disable\n");
   }
   if (options.set_security_eeprom_unlock) {
-    char password[33]="XBOXSCENE";
-    strcpy(password,options.set_security_password);
     char eeprom[256];
     strcpy (eeprom,options.set_security_eeprom);
-    if (!ata_eeprom_command(device, ATA_SECURITY_UNLOCK,password,&drive,eeprom)) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_UNLOCK, &drive,eeprom)) {
         pout("ATA SECURITY UNLOCK failed: %s\n", device->get_errmsg());
         returnval |= FAILSMART;
     }
