@@ -3767,6 +3767,80 @@ int ataPrintMain (ata_device * device, const ata_print_options & options)
     else
       pout("ATA Security set to frozen mode\n");
   }
+  if (options.set_security_eeprom_setpass) {
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    char eeprom[256];
+    strcpy (eeprom,options.set_security_eeprom);
+    
+    if (!ata_eeprom_command(device, ATA_SECURITY_SETPASS,password,&drive,eeprom)) {
+        pout("ATA SECURITY SETPASS failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security setpass\n");
+  }
+  if (options.set_security_eeprom_disable) {
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    char eeprom[256];
+    strcpy (eeprom,options.set_security_eeprom);
+    
+    if (!ata_eeprom_command(device, ATA_SECURITY_DISABLE,password,&drive,eeprom)) {
+        pout("ATA SECURITY DISABLE failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security disable\n");
+  }
+  if (options.set_security_eeprom_unlock) {
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    char eeprom[256];
+    strcpy (eeprom,options.set_security_eeprom);
+    if (!ata_eeprom_command(device, ATA_SECURITY_UNLOCK,password,&drive,eeprom)) {
+        pout("ATA SECURITY UNLOCK failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security unlock\n");
+  }
+
+// ATA security
+  if (options.set_security_disable) {
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    if (!ata_security_command(device, ATA_SECURITY_DISABLE,password)) {
+        pout("ATA SECURITY DISABLE failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security disabled\n");
+  }
+// ATA security
+  if (options.set_security_unlock) {
+  
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    if (!ata_security_command(device, ATA_SECURITY_UNLOCK,password)) {
+        pout("ATA SECURITY UNLOCK failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security unlocked\n");
+  }
+// ATA security
+  if (options.set_security_setpass) {
+    char password[33]="XBOXSCENE";
+    strcpy(password,options.set_security_password);
+    
+    if (!ata_security_command(device, ATA_SECURITY_SETPASS,password)) {
+        pout("ATA SECURITY SETPASS failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security setpass\n");
+  }
 
   // Set standby timer unless immediate standby is also requested
   if (options.set_standby && !options.set_standby_now) {

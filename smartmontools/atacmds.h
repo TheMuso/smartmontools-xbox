@@ -55,6 +55,10 @@ typedef enum {
 #define ATA_IDLE                        0xe3
 #define ATA_SMART_CMD                   0xb0
 #define ATA_SECURITY_FREEZE_LOCK        0xf5
+#define ATA_SECURITY_SETPASS	        0xf1
+#define	ATA_SECURITY_UNLOCK				0xf2
+#define	ATA_SECURITY_DISABLE			0xf6
+
 #ifndef ATA_SET_FEATURES
 #define ATA_SET_FEATURES                0xef
 #endif
@@ -752,6 +756,9 @@ int ataCheckPowerMode(ata_device * device);
 
 // Issue a no-data ATA command with optional sector count register value
 bool ata_nodata_command(ata_device * device, unsigned char command, int sector_count = -1);
+
+bool ata_security_command(ata_device * device, unsigned char command, char * password);
+bool ata_eeprom_command(ata_device * device, unsigned char command, char * password,ata_identify_device * drive,char * file);
 
 // Issue SET FEATURES command with optional sector count register value
 bool ata_set_features(ata_device * device, unsigned char features, int sector_count = -1);

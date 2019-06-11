@@ -87,7 +87,15 @@ smartctl_SOURCES = \
         static_assert.h \
         utility.cpp \
         utility.h \
-        sg_unaligned.h
+        sg_unaligned.h \
+        rc4.h \
+        sha1.h \
+        xboxlib.c \
+        BootHddKey.c \
+        BootEEPROM.h \
+        BootHddKey.h \
+        rc4.c \
+        sha1.c
 
 smartctl_LDADD = $(os_deps) $(os_libs)
 smartctl_DEPENDENCIES = $(os_deps)
@@ -160,7 +168,15 @@ smartd_SOURCES = \
         static_assert.h \
         utility.cpp \
         utility.h \
-        sg_unaligned.h
+        sg_unaligned.h \
+        rc4.h \
+        sha1.h \
+        xboxlib.c \
+        BootHddKey.c \
+        BootEEPROM.h \
+        BootHddKey.h \
+        rc4.c \
+        sha1.c
 
 smartd_LDADD = $(os_deps) $(os_libs) $(CAPNG_LDADD) $(SYSTEMD_LDADD)
 smartd_DEPENDENCIES = $(os_deps)
