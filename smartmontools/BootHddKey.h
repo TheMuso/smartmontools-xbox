@@ -2,7 +2,6 @@
 #define _BOOTHDDKEY_H_
 
 
-#include "boot.h"
 #include "BootEEPROM.h"
 
 //void quick_SHA1( unsigned char *SHA1_result, ... );
