@@ -850,16 +850,21 @@ bool ata_eeprom_command(ata_device * device, unsigned char command,
   char s_length = 0x14;
   char m_length = 0x28;
   unsigned char pw[32];
+  unsigned char NullHdKey[16] = {0};
+  EEPROMDATA eeprom_data;
 
   data = new unsigned char [512];
   memset(data, 0, 512);
   data[0] = security_master & 0x01;
-  EEPROMDATA eeprom_data;
-  read_eeprom_file(filename, &eeprom_data);
-  BootDecryptEEPROM(&eeprom_data);
   s_length = copy_swap_trim(serial, (drive->serial_no), s_length);
   m_length = copy_swap_trim(model, (drive->model), m_length);
-  HMAC_SHA1 (HDDPass, eeprom_data.HDDKkey, 0x10, model, m_length, serial, s_length);
+  if (filename != NULL) {
+    read_eeprom_file(filename, &eeprom_data);
+    BootDecryptEEPROM(&eeprom_data);
+    HMAC_SHA1 (HDDPass, eeprom_data.HDDKkey, 0x10, model, m_length, serial, s_length);
+  } else {
+    HMAC_SHA1 (HDDPass, NullHdKey, 0x10, model, m_length, serial, s_length);
+  }
 
   memcpy(pw, HDDPass, 20);
   pout("security_password=");

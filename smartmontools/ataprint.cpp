@@ -3790,6 +3790,31 @@ int ataPrintMain (ata_device * device, const ata_print_options & options)
       pout("ATA Security unlock\n");
   }
 
+  if (options.set_security_null_eeprom_setpass) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_SETPASS, &drive, NULL)) {
+        pout("ATA SECURITY SETPASS failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security setpass\n");
+  }
+  if (options.set_security_null_eeprom_disable) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_DISABLE, &drive, NULL)) {
+        pout("ATA SECURITY DISABLE failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security disable\n");
+  }
+  if (options.set_security_null_eeprom_unlock) {
+    if (!ata_eeprom_command(device, ATA_SECURITY_UNLOCK, &drive, NULL)) {
+        pout("ATA SECURITY UNLOCK failed: %s\n", device->get_errmsg());
+        returnval |= FAILSMART;
+    }
+    else
+      pout("ATA Security unlock\n");
+  }
+
 // ATA security
   if (options.set_security_disable) {
     char password[33]="XBOXSCENE";

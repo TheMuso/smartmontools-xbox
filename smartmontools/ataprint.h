@@ -103,6 +103,9 @@ struct ata_print_options
   bool set_security_eeprom_disable;
   bool set_security_eeprom_unlock;
   bool set_security_eeprom_setpass;
+  bool set_security_null_eeprom_disable;
+  bool set_security_null_eeprom_unlock;
+  bool set_security_null_eeprom_setpass;
   bool get_wcache; // print write cache status
   int set_wcache; // disable(-1), enable(1) write cache
   bool sct_wcache_reorder_get; // print write cache reordering status
@@ -151,6 +154,7 @@ struct ata_print_options
       set_standby(0), set_standby_now(false),
       get_security(false), set_security_freeze(false),
 	  set_security_disable(false),set_security_unlock(false),set_security_setpass(false),set_security_password({'X','B','O','X','S','C','E','N','E','\0'}),set_security_eeprom({'e','e','p','r','o','m','.','b','i','n'}),        set_security_eeprom_disable(false),set_security_eeprom_unlock(false),set_security_eeprom_setpass(false),
+      set_security_null_eeprom_disable(false), set_security_null_eeprom_unlock(false), set_security_null_eeprom_setpass(false),
       get_wcache(false), set_wcache(0),
       sct_wcache_reorder_get(false), sct_wcache_reorder_set(0),
       sct_wcache_reorder_set_pers(false),
