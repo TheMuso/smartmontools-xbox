@@ -158,8 +158,9 @@ static void Usage()
 "        Enable/disable Attribute autosave on device (on/off)\n\n"
 "  -s NAME[,VALUE], --set=NAME[,VALUE]\n"
 "        Enable/disable/change device setting: aam,[N|off], apm,[N|off],\n"
-"        dsn,[on|off], lookahead,[on|off], security-freeze, security-setpass,[password] security-disable,[password] security-unlock,[password]\n"
-"        security-eeprom-setpass,[filename] security-eeprom-disable,[filename] security-eeprom-unlock,[filename]\n"
+"        dsn,[on|off], lookahead,[on|off], security-freeze, security-setpass,[password] security-disable,[password], security-unlock,[password],\n"
+"        security-eeprom-setpass,[filename] security-eeprom-disable,[filename], security-eeprom-unlock,[filename],\n"
+"        security-null-eeprom-setpass, security-null-eeprom-disable, security-null-eeprom-unlock,\n"
 "        standby,[N|off|now], wcache,[on|off], rcache,[on|off],\n"
 "        wcreorder,[on|off[,p]], wcache-sct,[ata|on|off[,p]]\n\n"
   );
@@ -263,6 +264,7 @@ static std::string getvalidarglist(int opt)
   case opt_set:
     return "aam,[N|off], apm,[N|off], dsn,[on|off], lookahead,[on|off], security-freeze, "
            "security-setpass, security-disable, security-unlock, security-eeprom-setpass, security-eeprom-disable, security-eeprom-unlock, "
+           "security-null-eeprom-setpass, security-null-eeprom-disable, security-null-eeprom-unlock, "
            "standby,[N|off|now], wcache,[on|off], rcache,[on|off], wcreorder,[on|off[,p]], "
            "wcache-sct,[ata|on|off[,p]]";
   case 's':
@@ -938,6 +940,15 @@ static int parse_options(int argc, char** argv, const char * & type,
           memset(ataopts.set_security_password, 0, 33);
           strncpy(ataopts.set_security_eeprom, optarg + strlen("security-eeprom-unlock,"), len - strlen("security-eeprom-unlock,"));
           ataopts.set_security_eeprom_unlock = true;
+        }
+        else if (!strncmp(optarg, "security-null-eeprom-setpass", strlen("security-null-eeprom-setpass"))) {
+          ataopts.set_security_null_eeprom_setpass = true;
+        }
+        else if (!strncmp(optarg, "security-null-eeprom-disable", strlen("security-null-eeprom-disable"))) {
+          ataopts.set_security_null_eeprom_disable = true;
+        }
+        else if (!strncmp(optarg, "security-null-eeprom-unlock", strlen("security-null-eeprom-unlock"))) {
+          ataopts.set_security_null_eeprom_unlock = true;
         }
         else if (!strncmp(optarg, "security-setpass,", strlen("security-setpass,"))) {
           memset(ataopts.set_security_password, 0, 33);
