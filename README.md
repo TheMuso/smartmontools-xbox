@@ -4,7 +4,7 @@ This repository contains a fork of smartmontools (https://www.smartmontools.org)
 
 This code was originally developed by [ldotsfan](https://github.com/ldotsfan), and was cloned from https://git.code.sf.net/p/xboxhdm2/smartmontools-sec.git (also found on his github page), and updated to the latest smartmontools release, version 7.0.
 
-Binary releases are for Windows only at this time, but the code should be buildable on any recent Linux distribution. More information can be found on the smartmontools website, or in the README file found in the smartmontools directory of this repository.
+Binary releases are for Windows only at this time, but the code should be buildable on any recent Linux distribution. More information can be found on the smartmontools website, or in the [README](https://github.com/TheMuso/smartmontools-xbox/blob/xbox-eeprom-7.0/smartmontools/README) file found in the smartmontools directory of this repository.
 
 ## Sample usage:
 
