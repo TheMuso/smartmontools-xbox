@@ -81,12 +81,12 @@ git clean -d -f smartmontools
 
 # Build XBoxHDM23USB beta 2 zip
 cd release
-zip smartctl-xbox-$(git describe --abbrev=4)-windows-standalone-32-bit.zip standalone-32-bit/*
-zip smartctl-xbox-$(git describe --abbrev=4)-windows-standalone-64-bit.zip standalone-64-bit/*
+zip smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-windows-standalone-32-bit.zip standalone-32-bit/*
+zip smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-windows-standalone-64-bit.zip standalone-64-bit/*
 rm -r standalone-*
 mv xboxhdm23-beta2 xboxhdm23usb
-zip -r smartctl-xbox-$(git describe --abbrev=4)-XBoxHDM-2.3-Beta2.zip xboxhdm23usb || exit 1
+zip -r smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-XBoxHDM-2.3-Beta2.zip xboxhdm23usb || exit 1
 rm -r xboxhdm23usb
 mv xboxhdm23-beta3 xboxhdm23usb
-zip -r smartctl-xbox-$(git describe --abbrev=4)-XBoxHDM-2.3-Beta3.zip xboxhdm23usb || exit 1
+zip -r smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-XBoxHDM-2.3-Beta3.zip xboxhdm23usb || exit 1
 rm -r xboxhdm23usb
