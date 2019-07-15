@@ -42,8 +42,8 @@ git clean -d -f -x
 # Prepare directories to build zip files
 mkdir release
 cd release
-#mkdir -p standalone/32-bit
-#mkdir -p standalone/64-bit
+mkdir -p standalone-32-bit
+mkdir -p standalone-64-bit
 mkdir xboxhdm23-beta2
 mkdir -p xboxhdm23-beta3/XboxHD
 cd $CWD
@@ -54,8 +54,8 @@ cd smartmontools
 ./configure --build=$(./config.guess) --host=i686-w64-mingw32 || exit 1
 make $1 || exit 1
 cd $CWD
-#cp smartmontools/smartctl.exe release/standalone/32-bit
-#cp smartmontools/drivedb.h release/standalone/32-bit
+cp smartmontools/smartctl.exe release/standalone-32-bit
+cp smartmontools/drivedb.h release/standalone-32-bit
 cp smartmontools/smartctl.exe release/xboxhdm23-beta2/smartctl32.exe
 cp smartmontools/drivedb.h release/xboxhdm23-beta2
 cp smartmontools/smartctl.exe release/xboxhdm23-beta3/XboxHD/smartctl32.exe
@@ -69,8 +69,8 @@ cd smartmontools
 ./configure --build=$(./config.guess) --host=x86_64-w64-mingw32 || exit 1
 make $1 || exit 1
 cd $CWD
-#cp smartmontools/smartctl.exe release/standalone/64-bit
-#cp smartmontools/drivedb.h release/standalone/64-bit
+cp smartmontools/smartctl.exe release/standalone-64-bit
+cp smartmontools/drivedb.h release/standalone-64-bit
 cp smartmontools/smartctl.exe release/xboxhdm23-beta2/smartctl.exe
 cp smartmontools/drivedb.h release/xboxhdm23-beta2
 cp smartmontools/smartctl.exe release/xboxhdm23-beta3/XboxHD/smartctl.exe
@@ -81,6 +81,9 @@ git clean -d -f smartmontools
 
 # Build XBoxHDM23USB beta 2 zip
 cd release
+zip smartctl-xbox-$(git describe --abbrev=4)-windows-standalone-32-bit.zip standalone-32-bit/*
+zip smartctl-xbox-$(git describe --abbrev=4)-windows-standalone-64-bit.zip standalone-64-bit/*
+rm -r standalone-*
 mv xboxhdm23-beta2 xboxhdm23usb
 zip -r smartctl-xbox-$(git describe --abbrev=4)-XBoxHDM-2.3-Beta2.zip xboxhdm23usb || exit 1
 rm -r xboxhdm23usb
