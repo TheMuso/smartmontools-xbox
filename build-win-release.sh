@@ -79,7 +79,9 @@ cp xboxhdm23usb/beta3/*.bat release/xboxhdm23-beta3
 cp xboxhdm23usb/beta3/XboxHD/*.bat release/xboxhdm23-beta3/XboxHD
 git clean -d -f smartmontools
 
-# Build XBoxHDM23USB beta 2 zip
+# Build zip files
+cp README.md LICENSE release/standalone-32-bit
+cp README.md LICENSE release/standalone-64-bit
 cd release
 zip -j smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-windows-standalone-32-bit.zip standalone-32-bit/*
 zip -j smartctl-xbox-$(git describe --abbrev=4 | sed -e 's/_/~/g')-windows-standalone-64-bit.zip standalone-64-bit/*
